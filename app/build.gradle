@@ -21,6 +21,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField "String", "API_CONSUMER_KEY", '"'+apiProperties['apiConsumerKey']+'"'
+        buildConfigField "boolean", "USE_MOCK_GALLERY_LOADER", 'true'
+        buildConfigField "boolean", "USE_MOCK_GALLERY_REPOSITORY", 'true'
     }
 
     buildFeatures {
@@ -48,6 +50,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
     implementation 'io.reactivex.rxjava3:rxkotlin:3.0.0'

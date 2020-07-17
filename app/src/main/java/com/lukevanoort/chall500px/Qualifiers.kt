@@ -21,6 +21,10 @@ annotation class ActivityContext
 
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
+annotation class ViewScope
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
 annotation class UIScheduler
 
 @Qualifier

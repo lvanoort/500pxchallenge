@@ -1,11 +1,11 @@
 package com.lukevanoort.chall500px
 
+import com.lukevanoort.chall500px.gallery.GalleryAppModules
 import dagger.Component
-import dagger.Subcomponent
 
 @AppScope
 @Component(
-    modules = [AppModule::class]
+    modules = [AppModule::class, GalleryAppModules::class, BuildConfigModule::class]
 )
 interface AppComponent {
     fun inject(app: ChallengeApplication)
