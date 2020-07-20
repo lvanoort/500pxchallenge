@@ -155,6 +155,9 @@ class GalleryDisplayView : SwipeRefreshLayout {
                 is GalleryViewState.IdleGallery -> {
                     localCurrent.pictures[position].id.toLong()
                 }
+                is GalleryViewState.LoadingGallery -> {
+                    localCurrent.pictures[position].id.toLong()
+                }
                 else -> RecyclerView.NO_ID
             }
         }
@@ -180,6 +183,9 @@ class GalleryDisplayView : SwipeRefreshLayout {
         override fun onBindViewHolder(holder: GalleryVH, position: Int) {
             when(val localCurrent = currentState) {
                 is GalleryViewState.IdleGallery -> {
+                    holder.displayItem(localCurrent.pictures[position])
+                }
+                is GalleryViewState.LoadingGallery -> {
                     holder.displayItem(localCurrent.pictures[position])
                 }
             }

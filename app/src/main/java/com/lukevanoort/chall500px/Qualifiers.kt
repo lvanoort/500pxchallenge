@@ -30,3 +30,11 @@ annotation class UIScheduler
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class IOScheduler
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ApiConsumerKey
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ApiRootUrl

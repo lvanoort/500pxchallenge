@@ -22,4 +22,14 @@ class BuildConfigModule {
         } else {
             GalleryRepositoryConfig.Live
         }
+
+    @get:Provides
+    @get:ApiRootUrl
+    val apiRootUrl: String
+        get() = BuildConfig.API_ROOT
+
+    @get:Provides
+    @get:ApiConsumerKey
+    val apiConsumerKey: String
+        get() = BuildConfig.API_CONSUMER_KEY
 }

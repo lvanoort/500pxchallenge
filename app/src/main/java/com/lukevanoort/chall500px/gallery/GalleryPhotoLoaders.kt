@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RectShape
 import android.widget.ImageView
+import coil.api.load
 import com.lukevanoort.chall500px.photo.Photo
 import javax.inject.Inject
 import kotlin.random.Random
@@ -23,19 +24,29 @@ class MockGalleryPhotoLoader @Inject constructor(): GalleryPhotoLoader {
                 rnd.nextInt(256)
             )
 
-            intrinsicHeight = when(rnd.nextInt(3)) {
-                0 -> 1024
-                1 -> 500
-                2 -> 650
-                else -> 800
-            }
-            intrinsicWidth =when(rnd.nextInt(3)) {
-                0 -> 1024
-                1 -> 500
-                2 -> 650
-                else -> 800
-            }
+            intrinsicHeight = photo.height
+            intrinsicWidth = photo.width
         })
     }
 
 }
+
+class CoilPhotoLoader @Inject constructor(): GalleryPhotoLoader {
+    override fun loadPhoto(view: ImageView, photo: Photo) {
+        view.load(photo.thumbUrl) {
+            crossfade(true)
+            placeholder(ShapeDrawable(RectShape()).apply {
+                paint.color = Color.argb(
+                    0,
+                    0,
+                    0,
+                    0
+                )
+
+                intrinsicHeight = photo.height
+                intrinsicWidth = photo.width
+            })
+        }
+    }
+}
+
