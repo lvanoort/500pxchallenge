@@ -1,15 +1,13 @@
 package com.lukevanoort.chall500px
 
-import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
 import com.lukevanoort.chall500px.databinding.ActivityChallengeBinding
 import com.lukevanoort.chall500px.gallery.GalleryViewModel
 import javax.inject.Inject
+
 
 class ChallengeActivity : AppCompatActivity(), ActivityComponentProvider {
     private lateinit var component: ActivityComponent
@@ -28,6 +26,11 @@ class ChallengeActivity : AppCompatActivity(), ActivityComponentProvider {
         setContentView(binding.root)
 
         binding.gdvGallery.attachViewModel(vm)
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     override fun provideActivityComponent(): ActivityComponent {
