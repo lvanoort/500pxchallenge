@@ -6,6 +6,8 @@ import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import com.lukevanoort.chall500px.databinding.ActivityChallengeBinding
 import com.lukevanoort.chall500px.gallery.GalleryViewModel
+import com.lukevanoort.chall500px.navigation.BackHandler
+import com.lukevanoort.chall500px.navigation.NavigationViewModel
 import javax.inject.Inject
 
 
@@ -15,7 +17,7 @@ class ChallengeActivity : AppCompatActivity(), ActivityComponentProvider {
     private lateinit var binding: ActivityChallengeBinding
 
     @Inject
-    lateinit var vm: GalleryViewModel
+    lateinit var vm: NavigationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +27,7 @@ class ChallengeActivity : AppCompatActivity(), ActivityComponentProvider {
         binding = ActivityChallengeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.gdvGallery.attachViewModel(vm)
+        binding.nvRootNavigation.attachViewModel(vm)
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -35,6 +37,10 @@ class ChallengeActivity : AppCompatActivity(), ActivityComponentProvider {
 
     override fun provideActivityComponent(): ActivityComponent {
         return component
+    }
+
+    override fun onBackPressed() {
+        binding.nvRootNavigation.handleBack()
     }
 }
 

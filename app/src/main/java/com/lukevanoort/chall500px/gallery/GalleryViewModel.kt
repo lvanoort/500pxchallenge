@@ -1,6 +1,7 @@
 package com.lukevanoort.chall500px.gallery
 
-import android.util.Log
+import com.lukevanoort.chall500px.navigation.NavigationLocation
+import com.lukevanoort.chall500px.navigation.NavigationRepository
 import com.lukevanoort.chall500px.photo.Photo
 import io.reactivex.rxjava3.core.Observable
 import javax.inject.Inject
@@ -27,10 +28,11 @@ interface GalleryViewModel {
 
 
 class GalleryViewModelImpl @Inject constructor(
-    private val repo: GalleryRepository
+    private val galleryRepo: GalleryRepository,
+    private val navigationRepo: NavigationRepository
 ): GalleryViewModel {
     override fun getState(): Observable<GalleryViewState> {
-        return repo.getState().map {
+        return galleryRepo.getState().map {
             when(it) {
                 is GalleryRepositoryState.Loaded -> GalleryViewState.IdleGallery(it.contents)
                 is GalleryRepositoryState.Loading -> GalleryViewState.LoadingGallery(it.previousContents)
@@ -40,14 +42,14 @@ class GalleryViewModelImpl @Inject constructor(
     }
 
     override fun loadMore() {
-        repo.loadNextPage()
+        galleryRepo.loadNextPage()
     }
 
     override fun reload() {
-        repo.reload()
+        galleryRepo.reload()
     }
 
     override fun entrySelected(entry: Photo) {
+        navigationRepo.navigateTo(NavigationLocation.Detail(entry.id))
     }
-
 }

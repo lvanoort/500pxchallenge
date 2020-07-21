@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
 import com.lukevanoort.chall500px.gallery.GalleryViewComponent
+import com.lukevanoort.chall500px.navigation.NavigationViewComponent
 import dagger.Subcomponent
 
 
@@ -14,6 +15,7 @@ interface ActivityComponent {
     fun inject(act: ChallengeActivity)
 
     fun galleryViewComponent(): GalleryViewComponent
+    fun navigationViewComponent(): NavigationViewComponent
 }
 
 interface ActivityComponentProvider {
