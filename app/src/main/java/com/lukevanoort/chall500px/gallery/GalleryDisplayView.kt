@@ -17,6 +17,7 @@ import com.lukevanoort.chall500px.R
 import com.lukevanoort.chall500px.databinding.GalleryItemViewBinding
 import com.lukevanoort.chall500px.getActivityComponent
 import com.lukevanoort.chall500px.photo.Photo
+import com.lukevanoort.chall500px.photo.PhotoLoader
 import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
@@ -25,7 +26,7 @@ class GalleryDisplayView : SwipeRefreshLayout {
     private var stateSub: Disposable? = null
 
     @Inject
-    lateinit var photoLoader : GalleryPhotoLoader
+    lateinit var photoLoader : PhotoLoader
 
     private lateinit var recyclerView: RecyclerView
 
@@ -140,7 +141,7 @@ class GalleryDisplayView : SwipeRefreshLayout {
 
         fun displayItem(item: Photo) {
             currentItem = item
-            photoLoader.loadPhoto(binding.ivGalleryItem,item)
+            photoLoader.loadPhoto(binding.ivGalleryItem,item,false)
         }
 
     }

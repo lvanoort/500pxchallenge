@@ -3,10 +3,13 @@ package com.lukevanoort.chall500px.navigation
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.annotation.AnyThread
 import androidx.annotation.UiThread
 import com.lukevanoort.chall500px.detail.DetailView
+import com.lukevanoort.chall500px.detail.DetailViewModel
+import com.lukevanoort.chall500px.detail.DetailViewModelFactory
 import com.lukevanoort.chall500px.gallery.GalleryDisplayView
 import com.lukevanoort.chall500px.gallery.GalleryViewModel
 import com.lukevanoort.chall500px.gallery.GalleryViewState
@@ -26,12 +29,23 @@ class NavigationView : FrameLayout, BackHandler {
     lateinit var galleryViewModelProvider: Provider<GalleryViewModel>
     private val galleryView: GalleryDisplayView by lazy {
         GalleryDisplayView(context).also {
+            it.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
             it.attachViewModel(galleryViewModelProvider.get())
         }
     }
 
+    @Inject
+    lateinit var detailViewModelProvider: DetailViewModelFactory
     private val detailView: DetailView by lazy {
-        DetailView(context)
+        DetailView(context).also {
+            it.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+        }
     }
 
     private var currentView: View? = null
@@ -69,6 +83,9 @@ class NavigationView : FrameLayout, BackHandler {
                 }
                 is NavigationViewState.Detail -> {
                     currentView = detailView
+                    detailView.attachViewModel(
+                        detailViewModelProvider.provideDetailViewMode(localNext.id)
+                    )
                     addView(detailView)
                 }
             }

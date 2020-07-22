@@ -1,18 +1,19 @@
 package com.lukevanoort.chall500px
 
-import com.lukevanoort.chall500px.gallery.GalleryImageLoaderConfig
+import com.lukevanoort.chall500px.detail.DetailRepositoryConfig
 import com.lukevanoort.chall500px.gallery.GalleryRepositoryConfig
+import com.lukevanoort.chall500px.photo.PhotoLoaderConfig
 import dagger.Module
 import dagger.Provides
 
 @Module
 class BuildConfigModule {
     @get:Provides
-    val galleryLoaderConfig: GalleryImageLoaderConfig
-        get() = if (BuildConfig.USE_MOCK_GALLERY_LOADER) {
-            GalleryImageLoaderConfig.Mock
+    val galleryLoaderConfig: PhotoLoaderConfig
+        get() = if (BuildConfig.USE_MOCK_PHOTO_LOADER) {
+            PhotoLoaderConfig.Mock
         } else {
-            GalleryImageLoaderConfig.Live
+            PhotoLoaderConfig.Live
         }
 
     @get:Provides
@@ -21,6 +22,14 @@ class BuildConfigModule {
             GalleryRepositoryConfig.Mock
         } else {
             GalleryRepositoryConfig.Live
+        }
+
+    @get:Provides
+    val detailRepositoryConfig: DetailRepositoryConfig
+        get() = if(BuildConfig.USE_MOCK_DETAIL_REPOSITORY) {
+            DetailRepositoryConfig.Mock
+        } else {
+            DetailRepositoryConfig.Live
         }
 
     @get:Provides

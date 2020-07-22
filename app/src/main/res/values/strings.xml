@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Challenge Application</string>
+    <string name="additional_information">Additional Information</string>
 </resources>

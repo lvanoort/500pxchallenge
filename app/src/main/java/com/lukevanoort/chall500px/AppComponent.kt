@@ -1,7 +1,9 @@
 package com.lukevanoort.chall500px
 
+import com.lukevanoort.chall500px.detail.DetailAppModule
 import com.lukevanoort.chall500px.gallery.GalleryAppModules
 import com.lukevanoort.chall500px.navigation.NavigationAppModule
+import com.lukevanoort.chall500px.photo.PhotoModule
 import dagger.Component
 
 @AppScope
@@ -10,6 +12,8 @@ import dagger.Component
         AppModule::class,
         GalleryAppModules::class,
         NavigationAppModule::class,
+        DetailAppModule::class,
+        PhotoModule::class,
         BuildConfigModule::class
     ]
 )

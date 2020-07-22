@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/iv_detail_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_top_bar_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+    >
+        <View
+            android:id="@+id/v_statusbar"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:background="@color/translucentStatusBar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <View
+            android:id="@+id/v_topbar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/translucentOverlay"
+            app:layout_constraintTop_toBottomOf="@+id/v_statusbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_height="40dp"
+            android:layout_width="40dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_back_24"
+            app:layout_constraintTop_toTopOf="@+id/v_topbar"
+            app:layout_constraintBottom_toBottomOf="@+id/v_topbar"
+            app:layout_constraintStart_toStartOf="@+id/v_topbar"
+            >
+        </ImageView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/sv_metadata"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/translucentOverlay"
+        app:layout_constraintHeight_percent="0.4"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            >
+            <TextView
+                style="@style/TextAppearance.AppCompat.Display1"
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Very nice photo"
+                />
+            <TextView
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:id="@+id/tv_author"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_title"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Photographer Person"
+                />
+            <TextView
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:id="@+id/tv_description"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv_author"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi suscipit blandit odio. Pellentesque non risus vel leo efficitur feugiat. Etiam sit amet diam libero. Aliquam vel placerat enim, eget aliquam eros. Vestibulum vel ligula semper orci dictum egestas. Donec quis nunc sed nisi venenatis ornare. Etiam nec enim lacus. Integer metus ante, blandit eget rutrum vitae, pulvinar vitae libero. Vestibulum vitae massa sit amet sem ultrices gravida et vitae ex. Phasellus sapien eros, scelerisque suscipit mauris egestas, fringilla porttitor nulla. Aliquam volutpat justo eget mi venenatis condimentum. Aenean id aliquet elit, vel gravida massa. Sed vulputate auctor mi, id lobortis mi rhoncus et. Nam dictum nunc non felis commodo, non vehicula nisl blandit. "/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+    <androidx.constraintlayout.widget.Group
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="cl_top_bar_holder,sv_metadata"
+        android:id="@+id/grp_controls" />
+</merge>

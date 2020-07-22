@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
 import android.view.View
+import com.lukevanoort.chall500px.detail.DetailViewComponent
 import com.lukevanoort.chall500px.gallery.GalleryViewComponent
 import com.lukevanoort.chall500px.navigation.NavigationViewComponent
 import dagger.Subcomponent
@@ -16,6 +17,7 @@ interface ActivityComponent {
 
     fun galleryViewComponent(): GalleryViewComponent
     fun navigationViewComponent(): NavigationViewComponent
+    fun detailViewComponent(): DetailViewComponent
 }
 
 interface ActivityComponentProvider {

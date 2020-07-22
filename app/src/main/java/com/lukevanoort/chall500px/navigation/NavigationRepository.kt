@@ -2,6 +2,7 @@ package com.lukevanoort.chall500px.navigation
 
 import com.lukevanoort.chall500px.AppScope
 import com.lukevanoort.chall500px.gallery.GalleryRepositoryState
+import com.lukevanoort.chall500px.photo.Photo
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.BehaviorSubject
 import javax.inject.Inject

@@ -22,8 +22,9 @@ android {
 
         buildConfigField "String", "API_CONSUMER_KEY", '"'+apiProperties['apiConsumerKey']+'"'
         buildConfigField "String", "API_ROOT", '"'+apiProperties['apiRoot']+'"'
-        buildConfigField "boolean", "USE_MOCK_GALLERY_LOADER", 'false'
+        buildConfigField "boolean", "USE_MOCK_PHOTO_LOADER", 'false'
         buildConfigField "boolean", "USE_MOCK_GALLERY_REPOSITORY", 'false'
+        buildConfigField "boolean", "USE_MOCK_DETAIL_REPOSITORY", 'false'
     }
 
     buildFeatures {

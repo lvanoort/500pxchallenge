@@ -1,12 +1,14 @@
 package com.lukevanoort.chall500px.gallery
 
 import com.lukevanoort.chall500px.*
-import com.lukevanoort.chall500px.gallery.retrofit.PhotoResponse
-import com.lukevanoort.chall500px.gallery.retrofit.PopularPhotoService
+import com.lukevanoort.chall500px.photo.MockPhoto
 import com.lukevanoort.chall500px.photo.Photo
+import com.lukevanoort.chall500px.photo.PhotoResponse
+import com.lukevanoort.chall500px.photo.PopularPhotoService
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
 import io.reactivex.rxjava3.subjects.BehaviorSubject
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Inject
 import kotlin.random.Random
@@ -26,32 +28,7 @@ sealed class GalleryRepositoryState {
     ) : GalleryRepositoryState()
 }
 
-private data class RepoPhoto(
-    override val id: Int,
-    override val thumbUrl: String = ""
-): Photo {
-    override val width: Int
-    override val height: Int
-    init {
-        val rnd = Random(id)
-        width = when(rnd.nextInt(3)) {
-            0 -> 1024
-            1 -> 500
-            2 -> 650
-            else -> 800
-        }
-        height = when(rnd.nextInt(3)) {
-            0 -> 1024
-            1 -> 500
-            2 -> 650
-            else -> 800
-        }
-    }
-
-}
-
 interface GalleryRepository {
-
     fun getState() : Observable<GalleryRepositoryState>
     fun loadNextPage()
     fun reload()
@@ -69,7 +46,7 @@ class MockGalleryRepository @Inject  constructor(
 
     private var currentState = AtomicReference<InternalState>(InternalState.Idle)
 
-    private var contents: List<RepoPhoto> = emptyList()
+    private var contents: List<MockPhoto> = emptyList()
     private var startingPage: Int = 0
     private var endingPage: Int = 0
 
@@ -93,7 +70,7 @@ class MockGalleryRepository @Inject  constructor(
                     val mutableContents = contents.toMutableList()
                     for (i in 0..20) {
                         mutableContents.add(
-                            RepoPhoto(
+                            MockPhoto(
                                 id = endingPage*100+i
                             )
                         )
@@ -117,10 +94,10 @@ class MockGalleryRepository @Inject  constructor(
                 .subscribe {
                     endingPage = 0
                     startingPage = 1
-                    val mutableContents = mutableListOf<RepoPhoto>()
+                    val mutableContents = mutableListOf<MockPhoto>()
                     for (i in 0..20) {
                         mutableContents.add(
-                            RepoPhoto(
+                            MockPhoto(
                                 id = endingPage*1000+i
                             )
                         )
@@ -166,14 +143,18 @@ class LiveGalleryRepository @Inject  constructor(
             val nextPage = endingPage+1
             subject.onNext(GalleryRepositoryState.Loading(contents))
             service.getPopularPhotos(consumerKey,nextPage)
-                .subscribe {
+                .onErrorComplete()
+                .subscribe({
                     val mutable = contents.toMutableList()
                     mutable.addAll(it.photos)
                     contents = mutable.toList()
                     endingPage = nextPage
                     subject.onNext(GalleryRepositoryState.Loaded(contents))
                     currentState.set(InternalState.Idle)
-                }
+                },{
+                    subject.onNext(GalleryRepositoryState.Loaded(contents))
+                    currentState.set(InternalState.Idle)
+                })
         }
     }
 
@@ -181,12 +162,16 @@ class LiveGalleryRepository @Inject  constructor(
         if (currentState.compareAndSet(InternalState.Idle,InternalState.ReloadingData)) {
             subject.onNext(GalleryRepositoryState.Loading(contents))
             service.getPopularPhotos(consumerKey,1)
-                .subscribe {
+                .onErrorComplete()
+                .subscribe ({
                     contents = it.photos
                     endingPage = 1
                     subject.onNext(GalleryRepositoryState.Loaded(contents))
                     currentState.set(InternalState.Idle)
-                }
+                },{
+                    subject.onNext(GalleryRepositoryState.Loaded(contents))
+                    currentState.set(InternalState.Idle)
+                })
         }
     }
 
